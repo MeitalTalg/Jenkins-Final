@@ -40,14 +40,12 @@
       repo: 'https://github.com/MeitalTalg/Jenkins-Final.git'
       dest: /home/ec2-user/Jenkins-Final
     
-  - name: Build image
-    ansible.builtin.shell: docker build -t flask_app:latest /home/ec2-user/Jenkins-Final/src
 
   - name: AWS ECR
     ansible.builtin.shell: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 992382545251.dkr.ecr.us-east-1.amazonaws.com
 
   - name: AWS build meital-repo
-    ansible.builtin.shell: docker build -t meital-repo .
+    ansible.builtin.shell: docker build -t meital-repo /home/ec2-user/Jenkins-Final/src
 
   - name: tag the image
     ansible.builtin.shell: docker tag meital-repo:latest 992382545251.dkr.ecr.us-east-1.amazonaws.com/meital-repo:latest
@@ -56,8 +54,7 @@
     ansible.builtin.shell: docker push 992382545251.dkr.ecr.us-east-1.amazonaws.com/meital-repo:latest
     
   - name: Run the flask app
-    ansible.builtin.shell: docker run -d -p 5000:5000 --name web flask_app
-
+    ansible.builtin.shell: docker run -d -p 5000:5000 --name web meital-repo
 
   
   

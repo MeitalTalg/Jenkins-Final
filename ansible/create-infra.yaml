@@ -1,0 +1,68 @@
+---
+- hosts: all
+  become: True
+
+  tasks:
+  - name: Install epel-release and yum-utils
+    yum:
+      name: "{{ item }}"
+      state: latest
+     loop:
+      - epel-release
+      - yum-utils
+
+  - name: Install git, python-pip
+    dnf:
+      name: "{{ item }}"
+      state: latest
+    loop:
+      - git
+      - python-pip
+
+  - name: Apply new group without logout
+    ansible.builtin.shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+  - name: Install docker
+    dnf:
+      name: "{{ item }}"
+      state: latest
+    loop:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose
+
+  - name: Enable and start docker
+    ansible.builtin.service:
+      name: docker
+      enabled: true
+      state: started
+
+  - name: Clone a repo
+    ansible.builtin.git:
+      repo: 'app'
+      dest: /home/
+
+  - name: Build image and with build args
+    community.docker.docker_image:
+      name: myimage
+      build:
+        path: /path/to/build/dir
+        args:
+          log_volume: /var/log/myapp
+          listen_port: 8080
+      source: build
+
+  - name: Tag and push to docker hub
+    community.docker.docker_image:
+      name: pacur/centos-7:56
+      repository: dcoppenhagan/myimage:7.56
+      push: true
+      source: local
+
+  
+  
+
+  
+
+

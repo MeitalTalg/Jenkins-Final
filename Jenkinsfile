@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_PLAYBOOK_CREATOR = 'ansible/create-infra.yaml'
-        ANSIBLE_PLAYBOOK_DESTORY = 'ansible/destroy-infra.yaml'
+        ANSIBLE_PLAYBOOK_CREATOR = './ansible/create-infra.yaml'
+        ANSIBLE_PLAYBOOK_DESTORY = './ansible/destroy-infra.yaml'
         ANSIBLE_INVENTORY = 'ansible/inventory'
     }
 
@@ -32,8 +32,10 @@ pipeline {
           steps {
               script {
                   echo "deploy to prodaction"
-                   sh ' sudo dnf install flask python3 nginx'               
-                   sh ' python /src/app.py'
+                    sh ' aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 992382545251.dkr.ecr.us-east-1.amazonaws.com '               
+                    sh ' docker build -t meital-repo . '
+                    sh ' docker tag meital-repo:latest 992382545251.dkr.ecr.us-east-1.amazonaws.com/meital-repo:latest'
+                    sh ' docker push 992382545251.dkr.ecr.us-east-1.amazonaws.com/meital-repo:latest ' 
                 }
             }
         }

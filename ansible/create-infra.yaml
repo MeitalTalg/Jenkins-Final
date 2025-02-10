@@ -39,13 +39,13 @@
       repo: 'app'
       dest: /home/ec2-user
   
-  - name: Build image and with build args
+  - name: go to src folder
     ansible.builtin.shell: cd  /home/ec2-user/Jenkins-Final/src
     
-  - name: Build image and with build args
+  - name: Build image
     ansible.builtin.shell: docker build -t flask_app:latest .
 
-  - name: Build image and with build args
+  - name: Push image to docker hub
     ansible.builtin.shell: docker push meitaltal/flask_app:latest
     
   - name: Run the flask app

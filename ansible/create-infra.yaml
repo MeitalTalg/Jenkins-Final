@@ -43,15 +43,12 @@
     ansible.builtin.git:
       repo: 'app'
       dest: /home/ec2-user
-
+  
   - name: Build image and with build args
-    community.docker.docker_image:
-      name: flask_app
-      build:
-        path: /home/ec2-user/Jenkins-Final/src/Dockerfile
-        args:
-          listen_port: 5000
-      source: build
+    ansible.builtin.shell: 
+    cd  /home/ec2-user/Jenkins-Final/src
+    docker build -t flask_app:latest .
+    
 
   - name: Tag and push to docker hub
     community.docker.docker_image:

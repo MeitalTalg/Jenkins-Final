@@ -4,7 +4,7 @@
 
   tasks:
   - name: Install epel-release
-    ansible.builtin.shell: sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+    ansible.builtin.shell: sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm -y
   
   - name: Install packeges
     yum:

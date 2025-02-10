@@ -3,17 +3,19 @@
   become: True
 
   tasks:
+  - name: Install epel-release
+    ansible.builtin.shell: sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+  
   - name: Install packeges
     yum:
       name: "{{ item }}"
       state: latest
     loop:
-      - epel-release
       - yum-utils
       - python
       - python-pip
 
-  - name: Apply new group without logout
+  - name: add docker repo
     ansible.builtin.shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
   - name: Install docker

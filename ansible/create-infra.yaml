@@ -43,6 +43,9 @@
   - name: Build image
     ansible.builtin.shell: docker build -t flask_app:latest /home/ec2-user/Jenkins-Final/src
 
+  - name: Tag image
+    ansible.builtin.shell: docker image tag flask_app meitaltal/flask_app:latest
+
   - name: Push image to docker hub
     ansible.builtin.shell: docker push meitaltal/flask_app:latest
     

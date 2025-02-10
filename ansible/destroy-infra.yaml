@@ -3,23 +3,18 @@
   become: True
 
   tasks:
-  - name: Install epel-release and yum-utils
+  - name: remove epel-release and yum-utils
     yum:
       name: "{{ item }}"
       state: absent
      loop:
       - epel-release
       - yum-utils
-
-  - name: Install git, python-pip
-    dnf:
-      name: "{{ item }}"
-      state: absent
-    loop:
       - git
+      - python
       - python-pip
 
-  - name: Install docker
+  - name: remove docker
     dnf:
       name: "{{ item }}"
       state: absent
@@ -28,3 +23,5 @@
       - docker-ce-cli
       - containerd.io
       - docker-compose
+
+  

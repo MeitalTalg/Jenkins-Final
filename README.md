@@ -10,7 +10,7 @@ change the ip of the slave server
 
 create jenkins server
 
-create prod server and add him as a node in jenkins
+create prod server and add him as a node in jenkins master
 
 create pipline + connect to myrepo that every push it will build the job
 

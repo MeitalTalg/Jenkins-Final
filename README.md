@@ -7,6 +7,7 @@ create ec2 for ansible-master
 install ansible
 
 change the ip of the slave server
+do aws configure in the server
 
 create jenkins server
 

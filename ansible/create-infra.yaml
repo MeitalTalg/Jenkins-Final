@@ -11,6 +11,7 @@
       name: "{{ item }}"
       state: latest
     loop:
+      - git
       - yum-utils
       - python
       - python-pip

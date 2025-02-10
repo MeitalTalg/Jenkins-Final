@@ -14,6 +14,15 @@
       - python
       - python-pip
 
+  - name: delete image
+    ansible.builtin.shell:  docker rmi flask_app:latest
+
+  - name: stop running continer
+    ansible.builtin.shell: docker stop web
+
+  - name: delete continer
+    ansible.builtin.shell: docker rm web
+
   - name: remove docker
     dnf:
       name: "{{ item }}"
@@ -24,11 +33,4 @@
       - containerd.io
       - docker-compose
   
-  - name: delete image
-    ansible.builtin.shell:  docker rmi flask_app:latest
 
-  - name: stop running continer
-    ansible.builtin.shell: docker stop web
-
-  - name: delete continer
-    ansible.builtin.shell: docker rm web

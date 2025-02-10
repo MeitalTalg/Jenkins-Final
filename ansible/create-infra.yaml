@@ -7,7 +7,7 @@
     yum:
       name: "{{ item }}"
       state: latest
-     loop:
+    loop:
       - epel-release
       - yum-utils
 

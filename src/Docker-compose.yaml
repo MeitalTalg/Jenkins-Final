@@ -1,0 +1,5 @@
+services:
+  web:
+    build: /home/ec2-user/Jenkins-Final/src
+    ports:
+      - "8000:5000"

@@ -1,1 +1,30 @@
+---
+- hosts: all
+  become: True
 
+  tasks:
+  - name: Install epel-release and yum-utils
+    yum:
+      name: "{{ item }}"
+      state: absent
+     loop:
+      - epel-release
+      - yum-utils
+
+  - name: Install git, python-pip
+    dnf:
+      name: "{{ item }}"
+      state: absent
+    loop:
+      - git
+      - python-pip
+
+  - name: Install docker
+    dnf:
+      name: "{{ item }}"
+      state: absent
+    loop:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose

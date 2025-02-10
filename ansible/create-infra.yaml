@@ -42,24 +42,27 @@
   - name: Clone a repo
     ansible.builtin.git:
       repo: 'app'
-      dest: /home/
+      dest: /home/ec2-user
 
   - name: Build image and with build args
     community.docker.docker_image:
-      name: myimage
+      name: flask_app
       build:
-        path: /path/to/build/dir
+        path: /home/ec2-user/Jenkins-Final/src/Dockerfile
         args:
-          log_volume: /var/log/myapp
-          listen_port: 8080
+          listen_port: 5000
       source: build
 
   - name: Tag and push to docker hub
     community.docker.docker_image:
-      name: pacur/centos-7:56
-      repository: dcoppenhagan/myimage:7.56
+      name: flask_app
+      repository: meitaltal/flask_app:v1
       push: true
       source: local
+
+  - name: Run the flask app
+    ansible.builtin.shell: docker run -d -p 5000:5000 --name web flask_app
+
 
   
   

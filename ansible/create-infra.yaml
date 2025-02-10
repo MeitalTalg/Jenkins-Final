@@ -3,20 +3,13 @@
   become: True
 
   tasks:
-  - name: Install epel-release and yum-utils
+  - name: Install packeges
     yum:
       name: "{{ item }}"
       state: latest
     loop:
       - epel-release
       - yum-utils
-
-  - name: Install git, python-pip
-    dnf:
-      name: "{{ item }}"
-      state: latest
-    loop:
-      - git
       - python
       - python-pip
 
@@ -45,18 +38,14 @@
       dest: /home/ec2-user
   
   - name: Build image and with build args
-    ansible.builtin.shell: 
-    cd  /home/ec2-user/Jenkins-Final/src
-    docker build -t flask_app:latest .
+    ansible.builtin.shell: cd  /home/ec2-user/Jenkins-Final/src
     
+  - name: Build image and with build args
+    ansible.builtin.shell: docker build -t flask_app:latest .
 
-  - name: Tag and push to docker hub
-    community.docker.docker_image:
-      name: flask_app
-      repository: meitaltal/flask_app:v1
-      push: true
-      source: local
-
+  - name: Build image and with build args
+    ansible.builtin.shell: docker push meitaltal/flask_app:latest
+    
   - name: Run the flask app
     ansible.builtin.shell: docker run -d -p 5000:5000 --name web flask_app
 

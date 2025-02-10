@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_PLAYBOOK_CREATOR = 'ansible/create-infra.yaml'
-        ANSIBLE_PLAYBOOK_DESTORY = 'ansible/destroy-infra.yaml'
-        ANSIBLE_INVENTORY = 'ansible/inventory'
+        ANSIBLE_PLAYBOOK_CREATOR = '/home/ec2-user/workspace/test/ansible/create-infra.yaml'
+        ANSIBLE_PLAYBOOK_DESTORY = '/home/ec2-user/workspace/test/ansible/destroy-infra.yaml'
+        ANSIBLE_INVENTORY = '/home/ec2-user/workspace/test/ansible/inventory'
     }
 
   
     stages {
-        stage('Run Ansible Playbook') {
+        stage('Build - Run Ansible Playbook and run continer testing') {
             steps {
                     sh """
                     ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOK_CREATOR}

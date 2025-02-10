@@ -15,7 +15,7 @@
       - python-pip
 
   - name: delete image
-    ansible.builtin.shell:  docker rmi flask_app:latest
+    ansible.builtin.shell:  docker rmi meital-repo
 
   - name: stop running continer
     ansible.builtin.shell: docker stop web

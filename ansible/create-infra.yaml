@@ -17,13 +17,14 @@
       state: latest
     loop:
       - git
+      - python
       - python-pip
 
   - name: Apply new group without logout
     ansible.builtin.shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
   - name: Install docker
-    dnf:
+    yum:
       name: "{{ item }}"
       state: latest
     loop:

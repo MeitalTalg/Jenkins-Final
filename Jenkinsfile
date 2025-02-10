@@ -2,22 +2,20 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_PLAYBOOK_CREATOR = './ansible/create-infra.yaml'
-        ANSIBLE_PLAYBOOK_DESTORY = './ansible/destroy-infra.yaml'
+        ANSIBLE_PLAYBOOK_CREATOR = 'ansible/create-infra.yaml'
+        ANSIBLE_PLAYBOOK_DESTORY = 'ansible/destroy-infra.yaml'
         ANSIBLE_INVENTORY = 'ansible/inventory'
     }
 
   
     stages {
-        stage('Build - Run Ansible create-infra.yaml Playbook for run the app in continer') {
-          steps {
-            ansiblePlaybook(
-              installation: 'Ansible',
-              playbook: "${ANSIBLE_PLAYBOOK_CREATOR}",
-              inventory: "${ANSIBLE_INVENTORY}"
-              )
+        stage('Run Ansible Playbook') {
+            steps {
+                    sh """
+                    ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOK_CREATOR}
+                    """
+                }
             }
-          }
       
     stage('test') {
         steps {
@@ -43,11 +41,9 @@ pipeline {
     post { 
         always { 
             echo 'Run Ansible create-infra.yaml Playbook for delete the continer'
-             ansiblePlaybook(
-              installation: 'Ansible',
-              playbook: "${ANSIBLE_PLAYBOOK_DESTORY}",
-              inventory: "${ANSIBLE_INVENTORY}"
-              )           
+             sh """
+                    ansible-playbook -i ${ANSIBLE_INVENTORY} ${ANSIBLE_PLAYBOOK_DESTORY}
+                    """       
         }
      }
 }  

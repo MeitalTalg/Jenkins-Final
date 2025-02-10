@@ -7,7 +7,7 @@
     yum:
       name: "{{ item }}"
       state: absent
-     loop:
+    loop:
       - epel-release
       - yum-utils
       - git

@@ -39,9 +39,6 @@
     ansible.builtin.git:
       repo: 'https://github.com/MeitalTalg/Jenkins-Final.git'
       dest: /home/ec2-user/Jenkins-Final
-  
-  - name: go to src folder
-    ansible.builtin.shell: cd  /home/ec2-user/Jenkins-Final/src
     
   - name: Build image
     ansible.builtin.shell: docker build -t flask_app:latest /home/ec2-user/Jenkins-Final/src

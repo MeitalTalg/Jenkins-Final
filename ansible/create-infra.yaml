@@ -37,7 +37,7 @@
 
   - name: Clone a repo
     ansible.builtin.git:
-      repo: 'app'
+      repo: 'https://github.com/MeitalTalg/Jenkins-Final.git'
       dest: /home/ec2-user
   
   - name: go to src folder
